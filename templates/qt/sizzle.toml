@@ -1,0 +1,126 @@
+# A starting point. Replace every line of `say` with something true of the real app.
+
+[brand]
+name = "My App"
+logo = "logo.png"                       # exported by capture.py; delete to use initials
+tagline = "The one-line promise."
+outro_line = "Do the thing. Skip the rest."
+outro_features = ["Feature", "Feature", "Feature"]
+
+[format]
+size = "9:16"
+fps = 30
+
+[theme]
+accent = "#4ea4f6"
+second = "#7383f7"
+third = "#b28cff"
+warn = "#e0662f"
+
+[audio]
+voice = "af_heart"
+speed = 1.05
+bpm = 100
+
+[capture]
+script = "capture.py"
+scale = 2
+
+[[scene]]
+key = "hook"
+say = "Be honest. Something here is a mess."
+gap = 0.35
+type = "title"
+badges = 0.35
+  [[scene.line]]
+  text = "Be honest."
+  cue = 0
+  size = 64
+  y = 0.333
+  style = "soft"
+  scale = 1.0
+  [[scene.line]]
+  text = "Something here"
+  cue = "Something"
+  size = 120
+  y = 0.44
+  [[scene.line]]
+  text = "is a mess."
+  cue = "is"
+  size = 150
+  y = 0.56
+  style = "glitch"
+
+[[scene]]
+key = "chaos"
+say = "Two hundred of them. Every day. Nobody reads them."
+gap = 0.45
+caption = true
+type = "stats"
+  [[scene.stat]]
+  value = "200"
+  label = "of them"
+  cue = 0
+  [[scene.stat]]
+  value = "365"
+  label = "days a year"
+  cue = 3
+
+[[scene]]
+key = "reveal"
+say = "Meet My App."
+gap = 1.0
+type = "reveal"
+impact = true
+
+[[scene]]
+key = "first"
+say = "One sentence about the first real feature."
+gap = 0.6
+lead = 0.35
+caption = true
+type = "showcase"
+chip = { text = "OVERVIEW", glyph = "home" }
+  [[scene.shot]]
+  name = "overview"
+  from = [0, 0, 1060, 760]
+  to = { region = "main_panel", pad = 8 }
+  enter = "below"
+  exit = "left"
+
+[[scene]]
+key = "second"
+say = "One sentence about the second, with the button called out."
+gap = 0.45
+caption = true
+type = "showcase"
+chip = { text = "ACTIONS", glyph = "stack" }
+  [[scene.shot]]
+  name = "actions"
+  from = { region = "action_bar", pad = 12 }
+  enter = "right"
+  exit = "left"
+    [[scene.shot.ring]]
+    region = "primary_button"
+    cue = "called"
+
+[[scene]]
+key = "private"
+say = "And it all stays on your computer."
+gap = 0.45
+type = "icon"
+glyph = "lock"
+  [[scene.line]]
+  text = "Stays"
+  [[scene.line]]
+  text = "on your"
+  [[scene.line]]
+  text = "computer."
+  style = "gradient"
+
+[[scene]]
+key = "outro"
+say = "My App. Do the thing. Skip the rest."
+gap = 0.6
+type = "outro"
+cue = "Do-0.1"

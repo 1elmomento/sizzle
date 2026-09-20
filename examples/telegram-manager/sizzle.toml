@@ -1,0 +1,279 @@
+# The Telegram Manager promo video, one entry per beat.
+# Render with:  sizzle build reel/
+
+[brand]
+name = "Telegram Manager"
+logo = "logo.png"
+tagline = "Your whole Telegram, under control."
+outro_line = "Know your people. Clear the noise."
+outro_features = ["Friendships", "Channels", "Clean-up", "Search"]
+
+[format]
+targets = ["reels"]
+fps = 30
+
+[theme]
+accent = "#4ea4f6"
+second = "#7383f7"
+third = "#b28cff"
+warn = "#e0662f"
+
+[audio]
+voice = "af_heart"
+speed = 1.05
+bpm = 100
+
+[capture]
+backend = "script"
+script = "capture.py"
+scale = 2
+
+# --- the hook ------------------------------------------------------------------------
+
+[[scene]]
+key = "hook"
+say = "Be honest. Your Telegram is a mess."
+gap = 0.35
+type = "title"
+badges = 0.35
+  [[scene.line]]
+  text = "Be honest."
+  cue = 0
+  size = 64
+  y = 0.333
+  style = "soft"
+  scale = 1.0
+  [[scene.line]]
+  text = "Your"
+  cue = "your"
+  size = 132
+  y = 0.427
+  [[scene.line]]
+  text = "Telegram"
+  cue = "Telegram"
+  size = 132
+  y = 0.505
+  [[scene.line]]
+  text = "is a mess."
+  cue = "is"
+  size = 150
+  y = 0.599
+  style = "glitch"
+  bounce = 2.6
+
+[[scene]]
+key = "chaos"
+say = "Hundreds of chats. Thousands of unread messages. Groups you forgot you ever joined."
+gap = 0.45
+lead = 0.1
+caption = true
+type = "stats"
+notes = [
+  ["Crypto Talk", "120 new messages"], ["Parents of 3B", "48 new messages"],
+  ["Daily News", "230 new posts"], ["Memes Central", "1,204 new posts"],
+  ["Old Office Crew", "12 new messages"], ["Startup Founders", "86 new messages"],
+  ["Deal Hunters", "57 new posts"], ["Football Sundays", "31 new messages"],
+  ["Class of 2019", "9 new messages"],
+]
+  [[scene.stat]]
+  value = "312"
+  label = "chats"
+  cue = 0
+  [[scene.stat]]
+  value = "4812"
+  label = "unread messages"
+  cue = 3
+  [[scene.stat]]
+  value = "27"
+  label = "groups you forgot"
+  cue = 7
+
+# --- the reveal ----------------------------------------------------------------------
+
+[[scene]]
+key = "reveal"
+say = "Meet Telegram Manager."
+gap = 1.0
+lead = 0.25
+type = "reveal"
+impact = true
+
+# --- what it is ----------------------------------------------------------------------
+
+[[scene]]
+key = "control"
+say = "Not another chat app. A calm home for your people and your channels."
+gap = 0.65
+lead = 0.35
+caption = true
+type = "showcase"
+chip = { text = "OVERVIEW", glyph = "home" }
+  [[scene.shot]]
+  name = "overview"
+  from = [0, 0, 1060, 760]
+  to = [300, 80, 760, 620]
+  zoom = [0.9, "end-0.2"]
+  enter = "below"
+  exit = "left"
+  exit_amount = 0.44
+  tilt_out_y = -18
+  y = 0.448
+  scale = 0.86
+
+[[scene]]
+key = "trends"
+say = "Follow your friendships over time, and see who you really talk to."
+gap = 0.45
+caption = true
+type = "showcase"
+chip = { text = "FRIENDSHIPS", glyph = "chart" }
+  [[scene.shot]]
+  frames = { prefix = "trends_", count = 25, over = 0.95, delay = 0.15, curve = 1.0 }
+  after = { name = "trends_hover", at = 0.62 }
+  from = [310, 150, 722, 650]
+  to = { region = "trends_timeline", pad = 6 }
+  enter = "right"
+  enter_amount = 0.56
+  exit = "left"
+  exit_amount = 0.56
+
+[[scene]]
+key = "people"
+say = "Who's getting closer, who's drifting away, and who went quiet."
+gap = 0.4
+caption = true
+type = "showcase"
+chip = { text = "PEOPLE", glyph = "users" }
+  [[scene.shot]]
+  name = "people_rising"
+  at = "start"
+  from = { region = "people_rising", pad = 6, height = 560 }
+  enter = "right"
+  enter_amount = 1.02
+  exit_amount = 1.02
+  exit_over = 0.35
+  y = 0.469
+  pill = { text = "RISING", color = "accent", glyph = "arrow-up" }
+  [[scene.shot]]
+  name = "people_fading"
+  at = "3-0.25"
+  from = { region = "people_fading", pad = 6, height = 560 }
+  enter = "right"
+  enter_amount = 1.02
+  exit_amount = 1.02
+  exit_over = 0.35
+  y = 0.469
+  pill = { text = "FADING", color = "warn", glyph = "chevron-down" }
+  [[scene.shot]]
+  name = "people_quiet"
+  at = "6-0.25"
+  from = { region = "people_quiet", pad = 6, height = 560 }
+  enter = "right"
+  enter_amount = 1.02
+  exit_amount = 1.02
+  y = 0.469
+  pill = { text = "GONE QUIET", color = "#8a9bb0", glyph = "muted" }
+
+[[scene]]
+key = "feed"
+say = "Catch up on every channel in one calm feed, without marking a thing as read."
+gap = 0.45
+caption = true
+type = "showcase"
+chip = { text = "CHANNELS", glyph = "feed" }
+  [[scene.shot]]
+  name = "feed"
+  from = [300, 88, 760, 640]
+  to = [300, 520, 760, 640]
+  zoom = [0.3, "end"]
+  enter = "right"
+  exit = "fade"
+  shrink = 1
+  scale = 0.92
+
+[[scene]]
+key = "clean"
+say = "When it's time to clean up, mark chats as read, mute them with undo, or leave dozens of groups at once."
+gap = 0.45
+caption = true
+type = "showcase"
+chip = { text = "BULK ACTIONS", glyph = "stack" }
+  [[scene.shot]]
+  name = "sheet_unread"
+  at = "start"
+  from = { region = "sheet_panel", dx = 12, dw = -24, dy = 8, height = 600 }
+  to = { region = "sheet_panel", dx = 12, dw = -24, dy = -20, height = 600, anchor = "bottom" }
+  zoom = [0.7, "mark-0.2"]
+  enter = "below"
+  exit = "left"
+  exit_over = 0.35
+  width = 0.852
+  y = 0.448
+  scale = 0.9
+    [[scene.shot.ring]]
+    region = "sheet_mark_read"
+    cue = "mark-0.1"
+    [[scene.shot.ring]]
+    region = "sheet_mute"
+    cue = "mute-0.1"
+    color = "#9fd0ff"
+    [[scene.shot.note]]
+    text = "Undo"
+    glyph = "refresh"
+    cue = "undo-0.1"
+    until = "leave+0.05"
+    x = 0.435
+    y = 0.657
+  [[scene.shot]]
+  name = "bulk"
+  at = "leave-0.1"
+  from = { region = "bulk_bar", x = 300, width = 752, height = 530, anchor = "bottom", dy = 10 }
+  enter = "right"
+  exit = "left"
+  exit_amount = 0.56
+    [[scene.shot.ring]]
+    region = "bulk_leave…"
+    cue = "leave+0.3"
+    color = "#ff7b7b"
+
+[[scene]]
+key = "search"
+say = "Find any message you've ever saved, in an instant. Even offline."
+gap = 0.45
+caption = true
+type = "showcase"
+chip = { text = "SEARCH", glyph = "search" }
+  [[scene.shot]]
+  name = "search"
+  from = [296, 2, 760, 690]
+  enter = "below"
+  tilt_in = 18
+  exit = "left"
+  scale = 0.92
+  type_into = { region = "search_field", text = "trip", at = 0.45, over = 0.6, results_at = 1.1, results_over = 0.8 }
+
+# --- the close -----------------------------------------------------------------------
+
+[[scene]]
+key = "private"
+say = "And it all stays on your computer."
+gap = 0.45
+lead = 0.3
+type = "icon"
+glyph = "lock"
+y = 0.406
+  [[scene.line]]
+  text = "Stays"
+  [[scene.line]]
+  text = "on your"
+  [[scene.line]]
+  text = "computer."
+  style = "gradient"
+
+[[scene]]
+key = "outro"
+say = "Telegram Manager. Know your people. Clear the noise."
+gap = 0.6
+lead = 0.35
+type = "outro"
+cue = "Know-0.1"

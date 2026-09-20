@@ -1,0 +1,9 @@
+{
+  "name": "sizzle",
+  "description": "Build narrated product demo videos from your app's real UI, for Instagram Reels, TikTok, YouTube Shorts, X and YouTube.",
+  "version": "0.1.0",
+  "author": { "name": "Behnam Rezaei" },
+  "homepage": "https://github.com/behnamrezaei/sizzle",
+  "license": "MIT",
+  "keywords": ["video", "demo", "marketing", "launch", "screencast"]
+}

@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sizzle"
+version = "0.1.0.dev0"
+description = "Narrated product demo videos, built from your app's real UI, for every platform you ship to"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Behnam Rezaei" }]
+keywords = ["demo video", "promo video", "screencast", "trailer", "reels", "tiktok", "shorts",
+            "product launch", "marketing", "motion graphics", "text to speech"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Multimedia :: Graphics :: Presentation",
+]
+dependencies = [
+    "PySide6>=6.6",
+    "numpy>=1.24",
+    "scipy>=1.10",
+]
+
+[project.optional-dependencies]
+# Narration. espeak-ng, which Kokoro uses for phonemisation, is GPL-3.0 — so it is an
+# opt-in extra rather than a dependency everyone inherits. Without it, drop your own
+# WAV files into <dir>/vo/ and the rest of the pipeline is unchanged.
+voice = ["kokoro-onnx>=0.4", "soundfile>=0.12", "espeakng-loader>=0.2"]
+web = ["playwright>=1.40"]
+dev = ["pytest>=8.0"]
+
+[project.urls]
+Homepage = "https://github.com/behnamrezaei/sizzle"
+Issues = "https://github.com/behnamrezaei/sizzle/issues"
+
+[project.scripts]
+sizzle = "sizzle.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sizzle"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
