@@ -16,7 +16,7 @@ src/sizzle/          the engine — see README.md for the user-facing story
   card.py            the tilted app card, callout rings, the typing overlay
   captions.py        word-synced burned-in captions
   render.py          Reel: frame(t), stills, video → ffmpeg
-  music.py           the synthesized score; standalone, numpy + scipy only
+  music.py           the score, generated per project from a seed; numpy + scipy only
   narrate.py         Kokoro; standalone, imports nothing from the package
   glyphs.py          38 line icons + the generated brand mark
   capture/           script · images (web · video planned)
@@ -31,14 +31,18 @@ templates/qt/                a starter config + capture stub
 .venv/bin/python -m pytest          # 19 tests, <1s, no model or network needed
 ```
 
-The end-to-end check is the Telegram Manager reel, which lives in its own project
-because its capture script imports the app:
+The end-to-end check is `video/`, sizzle's own promo, which is in this repo and needs
+nothing outside it:
 
 ```bash
-cd ~/Desktop/Projects/telegram-manger
-~/Desktop/Projects/sizzle/.venv/bin/sizzle plan reel/
-~/Desktop/Projects/sizzle/.venv/bin/sizzle stills reel/ --targets tiktok --at 30.5
+.venv/bin/sizzle capture video/      # draws the terminal and config shots
+.venv/bin/sizzle narrate video/      # needs the voice extra
+.venv/bin/sizzle plan video/         # the timeline; ~50s over ten beats
+.venv/bin/sizzle sheet video/        # one still per scene
 ```
+
+`examples/telegram-manager/` is the reel sizzle was extracted from. It cannot be rendered
+here: its capture script imports the app, which lives in its own project.
 
 Always look at stills before rendering a full video — a render is minutes, a still is a
 second. `sheet` gives one frame per scene.
@@ -67,11 +71,21 @@ second. `sheet` gives one frame per scene.
 - A 47 s reel holds ~900 MB of captured screenshots in memory; capture only what is used.
 - Screenshots are addressed in *logical* coordinates at `[capture] scale`; the engine
   applies the device pixel ratio.
+- **The narration always wins.** Music in the 1.5-5 kHz consonant band reads as a sharp
+  ring over the voice. The bed is split and ducked per band — and the split filters must
+  be steep, because an order-2 lowpass at 900 Hz still passes 2 kHz at only -14 dB, so
+  the consonant energy hides in the band that ducks least.
+- **Measure masking from `music.wav`, never `mix.wav` minus `voice.wav`.** The mix's
+  normalisation leaves a voice residue that floors the ratio near 0.26 and hides the
+  effect of any change. This wasted three rounds of tuning once.
 
 ## Open
 
 - `web` capture (Playwright, driven from config) and `video` capture (cut from a screen
   recording) are designed but not built. They are what make the tool usable by people who
   are not fluent in Python — most of the audience.
-- Not published: no GitHub repo, not on PyPI. The name is free on PyPI as of today.
-- `pyproject.toml` guesses `github.com/behnamrezaei/sizzle`; confirm before publishing.
+- Published at `github.com/1elmomento/sizzle`, MIT, no tagged release. **Not on PyPI**,
+  so `pip install sizzle` does not work and the README says so; install is from source.
+- No `sizzle init`, so a newcomer has to hand-write their first `sizzle.toml` from the
+  README. This is the largest gap between "installed" and "first video".
+- No CI. The 19 tests run locally only.
