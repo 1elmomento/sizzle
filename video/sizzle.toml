@@ -1,0 +1,220 @@
+# sizzle, introducing itself. One [[scene]] per beat.
+#   sizzle build video/ --targets reels
+
+[brand]
+name = "sizzle"
+tagline = "Your app's own screens, narrated."
+outro_line = "From a config file to a launch video."
+outro_features = ["Word cues", "Original score", "Captions"]
+
+[format]
+targets = ["reels"]
+fps = 30
+cover_at = 11.4    # the reveal, held; impact+1.4 lands in the gap after it
+
+[theme]
+accent = "#ff8a3d"
+second = "#f7594e"
+third = "#ffc861"
+warn = "#4ea4f6"
+background = ["#0f0a08", "#20130e", "#080505"]
+
+[audio]
+voice = "af_heart"
+speed = 1.05
+bpm = 104
+
+[capture]
+backend = "script"
+script = "capture.py"
+scale = 2
+
+# --- the hook ---------------------------------------------------------------------------
+
+[[scene]]
+key = "hook"
+say = "You shipped the app. Now you need the video."
+gap = 0.3
+type = "title"
+  [[scene.line]]
+  text = "You shipped the app."
+  cue = 0
+  size = 62
+  y = 0.345
+  style = "soft"
+  scale = 1.0
+  [[scene.line]]
+  text = "Now you need"
+  cue = "Now"
+  size = 96
+  y = 0.445
+  [[scene.line]]
+  text = "the video."
+  cue = "video"
+  size = 132
+  y = 0.552
+  style = "glitch"
+  bounce = 2.6
+
+# --- the problem ------------------------------------------------------------------------
+
+[[scene]]
+key = "cost"
+say = "An editor you don't know. A voice you hate recording. Music you cannot legally use. And four different shapes to export."
+gap = 0.45
+lead = 0.1
+caption = true
+type = "tally"
+  [[scene.row]]
+  text = "Learn the editor"
+  value = "3h"
+  cue = "editor"
+  [[scene.row]]
+  text = "Record the voiceover"
+  value = "11 takes"
+  cue = "voice"
+  [[scene.row]]
+  text = "Licence the music"
+  value = "$49"
+  cue = "Music"
+  color = "second"
+  [[scene.row]]
+  text = "Export every shape"
+  value = "x4"
+  cue = "shapes"
+  [scene.total]
+  text = "EVERY RELEASE"
+  value = "again"
+  cue = "export"
+
+# --- the reveal -------------------------------------------------------------------------
+
+[[scene]]
+key = "reveal"
+say = "This is sizzle."
+gap = 0.9
+type = "reveal"
+impact = true
+
+# --- the config file --------------------------------------------------------------------
+
+[[scene]]
+key = "config"
+say = "Your whole video is one config file. One entry per beat of it."
+gap = 0.6
+lead = 0.35
+caption = true
+type = "showcase"
+chip = { text = "ONE CONFIG FILE", glyph = "code" }
+  [[scene.shot]]
+  name = "config"
+  from = "config_all"
+  to = { region = "scene_block", pad = 18 }
+  zoom = ["One", "beat"]
+  enter = "below"
+  exit = "left"
+
+# --- the central idea -------------------------------------------------------------------
+
+[[scene]]
+key = "cues"
+say = "Motion is cued to spoken words, not to timestamps. Rewrite a line and the whole video re-times itself."
+gap = 0.45
+caption = true
+type = "showcase"
+chip = { text = "WORD CUES", glyph = "bolt" }
+  [[scene.shot]]
+  name = "config"
+  from = { region = "shot_block", pad = 14 }
+  to = { region = "cue_line", pad = 26 }
+  zoom = ["timestamps", "Rewrite+0.4"]
+  enter = "right"
+  exit = "left"
+    [[scene.shot.ring]]
+    region = "cue_line"
+    cue = "words-0.15"
+
+# --- the timeline -----------------------------------------------------------------------
+
+[[scene]]
+key = "timeline"
+say = "It speaks your script, measures every line, and builds the timeline from what it hears."
+gap = 0.45
+caption = true
+type = "showcase"
+chip = { text = "THE TIMELINE", glyph = "clock" }
+  [[scene.shot]]
+  name = "plan"
+  from = "plan_all"
+  to = { region = "plan_rows", pad = 16 }
+  zoom = ["measures", "hears"]
+  enter = "below"
+  exit = "left"
+    [[scene.shot.ring]]
+    region = "vo_column"
+    cue = "measures+0.15"
+
+# --- real frames ------------------------------------------------------------------------
+
+[[scene]]
+key = "frames"
+say = "Your own screenshots become motion graphics, with captions burned in word by word."
+gap = 0.45
+caption = true
+type = "showcase"
+chip = { text = "REAL FRAMES", glyph = "play" }
+  [[scene.shot]]
+  name = "frame"
+  from = "frame_all"
+  width = 0.44
+  enter = "right"
+  exit = "fade"
+    [[scene.shot.ring]]
+    region = "frame_caption"
+    cue = "captions-0.1"
+
+# --- the score --------------------------------------------------------------------------
+
+[[scene]]
+key = "score"
+say = "The score is generated from that same timeline, so it lands on your cuts. Nothing to license."
+gap = 0.5
+type = "icon"
+glyph = "sparkle"
+  [[scene.line]]
+  text = "An original"
+  [[scene.line]]
+  text = "score."
+  [[scene.line]]
+  text = "Nothing to license."
+  style = "gradient"
+
+# --- every platform ---------------------------------------------------------------------
+
+[[scene]]
+key = "platforms"
+say = "Then one video per platform, with your captions clear of every app's own buttons."
+gap = 0.45
+caption = true
+type = "showcase"
+chip = { text = "EVERY PLATFORM", glyph = "globe" }
+  [[scene.shot]]
+  name = "out"
+  from = "out_all"
+  to = { region = "out_files", pad = 18 }
+  zoom = ["platform", "buttons"]
+  enter = "below"
+  exit = "fade"
+    [[scene.shot.ring]]
+    region = "out_files"
+    cue = "platform+0.2"
+
+# --- the sign-off -----------------------------------------------------------------------
+
+[[scene]]
+key = "outro"
+say = "sizzle. From a config file to a launch video."
+gap = 0.55
+type = "outro"
+cue = "From-0.1"
+line_size = 42

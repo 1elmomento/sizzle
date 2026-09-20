@@ -134,14 +134,19 @@ def step_video(config) -> None:
             print(f"! {warning}")
         print(f"rendering {target.name}: {reel.timeline.end:.1f}s at {target.width}x{target.height}")
         reel.video(config.dir / f"silent-{target.name}.mp4")
-        reel.cover(reel.timeline.impact + 1.4, config.dir / f"cover-{target.name}.jpg")
+        at = config.cover_at if config.cover_at is not None else reel.timeline.impact + 1.4
+        reel.cover(at, config.dir / f"cover-{target.name}.jpg")
 
 
-def step_audio(config) -> None:
+def step_audio(config, seed: int | None = None) -> None:
+    """`--seed` rerolls the score without touching anything else."""
+    if seed is not None:
+        config.audio.seed = seed
     if not (config.dir / "timeline.json").exists():
         _reel(config).timeline.dump(config.dir / "timeline.json")
     _run([audio_python(), HERE / "music.py", config.dir, config.audio.bpm,
-          config.audio.chords, config.audio.music, config.audio.duck])
+          config.audio.chords, config.audio.music, config.audio.duck, config.score_seed,
+          config.audio.style])
 
 
 def step_mux(config, out: Path | None) -> None:
@@ -188,6 +193,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--out", help="where the finished files go (default <dir>/out)")
     parser.add_argument("--text", help="voices: the line to audition")
     parser.add_argument("--voices", help="voices: comma-separated names")
+    parser.add_argument("--seed", type=int, help="audio: reroll the score with another seed")
     args = parser.parse_args(argv)
 
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
@@ -203,7 +209,7 @@ def main(argv: list[str] | None = None) -> None:
              "voices": lambda: step_voices(config, args.text, args.voices),
              "capture": lambda: step_capture(config), "plan": lambda: step_plan(config),
              "stills": lambda: step_stills(config, args.at), "sheet": lambda: step_stills(config, None),
-             "video": lambda: step_video(config), "audio": lambda: step_audio(config),
+             "video": lambda: step_video(config), "audio": lambda: step_audio(config, args.seed),
              "mux": lambda: step_mux(config, out)}
     steps[args.step]()
 

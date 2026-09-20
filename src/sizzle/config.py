@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import tomllib
+import zlib
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 
@@ -47,10 +48,12 @@ class Audio:
     voice: str = "af_heart"
     speed: float = 1.05
     bpm: int = 100
-    chords: str = "minor-lift"
+    chords: str = "auto"        # "auto" picks a progression from the seed
     music: float = 0.42
     duck: float = 0.6
     tail: float = 2.4
+    seed: int | None = None     # None: derived from the brand name, so projects differ
+    style: str = "auto"         # "auto", or one of sizzle.music.STYLES
 
 
 @dataclass
@@ -77,6 +80,7 @@ class Config:
     capture: dict
     beats: list[Beat]
     overrides: dict
+    cover_at: float | None = None      # seconds; None: 1.4s after the impact
 
     # The active target decides the frame; everything else reads these.
     @property
@@ -113,6 +117,13 @@ class Config:
 
     def spoken(self) -> list[tuple[str, str]]:
         return [(b.key, b.say) for b in self.beats if b.say]
+
+    @property
+    def score_seed(self) -> int:
+        """What makes this project's score its own. Stable for a project, different across them."""
+        if self.audio.seed is not None:
+            return int(self.audio.seed)
+        return zlib.crc32(self.brand.name.encode()) % 100_000
 
 
 def _color(raw, fallback: str) -> QColor:
@@ -155,8 +166,9 @@ def load(path: str | Path) -> Config:
 
     a = raw.get("audio", {})
     audio = Audio(voice=a.get("voice", "af_heart"), speed=a.get("speed", 1.05), bpm=a.get("bpm", 100),
-                  chords=a.get("chords", "minor-lift"), music=a.get("music", 0.42),
-                  duck=a.get("duck", 0.6), tail=a.get("tail", 2.4))
+                  chords=a.get("chords", "auto"), music=a.get("music", 0.42),
+                  duck=a.get("duck", 0.6), tail=a.get("tail", 2.4), seed=a.get("seed"),
+                  style=a.get("style", "auto"))
 
     f = raw.get("format", {})
     fps = f.get("fps", 30)
@@ -177,4 +189,4 @@ def load(path: str | Path) -> Config:
         raise SystemExit(f"{path}: no [[scene]] entries")
 
     return Config(dir=here, brand=brand, theme=theme, audio=audio, targets=targets, active=targets[0],
-                  capture=c, beats=beats, overrides=raw.get("target", {}))
+                  capture=c, beats=beats, overrides=raw.get("target", {}), cover_at=f.get("cover_at"))

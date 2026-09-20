@@ -37,8 +37,8 @@ web = ["playwright>=1.40"]
 dev = ["pytest>=8.0"]
 
 [project.urls]
-Homepage = "https://github.com/behnamrezaei/sizzle"
-Issues = "https://github.com/behnamrezaei/sizzle/issues"
+Homepage = "https://github.com/1elmomento/sizzle"
+Issues = "https://github.com/1elmomento/sizzle/issues"
 
 [project.scripts]
 sizzle = "sizzle.cli:main"

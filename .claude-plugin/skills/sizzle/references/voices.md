@@ -1,13 +1,12 @@
 # Narration voices
 
-Kokoro (ONNX), run through `reelkit/narrate.py`. Always audition before committing:
+Kokoro (ONNX), run through `sizzle/narrate.py`. Always audition before committing:
 
 ```bash
-PYTHONPATH=~/.claude/skills/promo-reel <venv>/bin/python -m reelkit voices reel/ \
-    --voices af_heart,af_bella,af_nicole,bf_emma
+sizzle voices video/ --voices af_heart,af_bella,af_nicole,bf_emma
 ```
 
-This writes `reel/voice-samples/<voice>.wav`. **Let the user choose** — a voice that
+This writes `video/voice-samples/<voice>.wav`. **Let the user choose** — a voice that
 reads as "too old" or "too corporate" sinks an otherwise good video, and you cannot
 judge that for them.
 

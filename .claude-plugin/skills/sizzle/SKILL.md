@@ -122,8 +122,33 @@ this only after an archetype genuinely will not bend.
   `python sizzle/narrate.py fetch`. Never put either in a project venv, and never in a
   temp directory: a 350 MB model in `/tmp` is a re-download on the next machine reboot.
 - **Rendering** needs PySide6 (the project's venv, for a Qt app) and `ffmpeg`.
-- Override interpreters with `REELKIT_TTS_PYTHON`, `REELKIT_AUDIO_PYTHON`,
-  `REELKIT_APP_PYTHON`; the model cache with `REELKIT_MODELS`.
+- Override interpreters with `SIZZLE_TTS_PYTHON`, `SIZZLE_AUDIO_PYTHON`,
+  `SIZZLE_APP_PYTHON`; the model cache with `SIZZLE_MODELS`.
+
+## The score
+
+Generated per project, not chosen from presets. `[audio] seed` (default: the brand name)
+picks a style, key, mode, progression, drum kit, one voice each for bass, lead and pad,
+and a melodic motif — a rhythm and a contour phrased in four-bar answers, resolving home
+every fourth bar. The melody reads the narration timeline: under a spoken line it drops to
+the notes that carry the phrase, and states itself in full between lines. Two products
+never get the same score. Reroll without touching anything else:
+
+```bash
+sizzle audio video/ --seed 42       # try another; keep the one you like in [audio] seed
+```
+
+The narration always wins. The bed is split at 900 Hz and 5.2 kHz and ducked per band, so
+the 1.5-5 kHz consonant range sits ~20 dB under a spoken line while the low end keeps
+carrying the groove — a broadband duck leaves bright content sitting on the voice, which
+is what reads as a sharp ring over the narrator. `sizzle audio` also writes `music.wav`,
+the bed alone: the only honest way to check how much music is on top of the voice, since
+`mix.wav` minus `voice.wav` leaves a residue that hides the answer.
+
+`[audio] style` pins one of `neon`, `eight`, `lofi`, `drive`, `organic`, `dub`, `still`.
+`[audio] chords` pins a mode (`aeolian`, `dorian`, `phrygian`, `ionian`, `mixolydian`,
+`lydian`, `harmonic`); the old names still work. `[format] cover_at` sets the cover frame's
+time in seconds, for when the default lands between scenes.
 
 ## Things that will bite
 
