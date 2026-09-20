@@ -81,11 +81,7 @@ second. `sheet` gives one frame per scene.
 
 ## Open
 
-- `web` capture (Playwright, driven from config) and `video` capture (cut from a screen
-  recording) are designed but not built. They are what make the tool usable by people who
-  are not fluent in Python — most of the audience.
-- Published at `github.com/1elmomento/sizzle`, MIT, no tagged release. **Not on PyPI**,
-  so `pip install sizzle` does not work and the README says so; install is from source.
-- No `sizzle init`, so a newcomer has to hand-write their first `sizzle.toml` from the
-  README. This is the largest gap between "installed" and "first video".
-- No CI. The 19 tests run locally only.
+See [ROADMAP.md](ROADMAP.md) — kept there rather than here so the two do not drift. The
+short version: no `sizzle init` and no `web` capture are what stand between a stranger
+and their first video; there is no CI and no PyPI release; and the archetypes are tuned
+for 9:16, so other shapes need their fractions revisited by hand.
