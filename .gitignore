@@ -19,3 +19,7 @@ silent-*.mp4
 lines.json
 timeline.json
 regions.json
+
+# Development notes, kept on this machine only.
+CLAUDE.md
+ROADMAP.md

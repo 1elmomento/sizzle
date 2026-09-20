@@ -26,9 +26,6 @@ video from a config file and your app's own screens.
 >
 > It does work, end to end, today. But treat it as something to experiment with, not
 > something to depend on. Issues and reports of what broke are genuinely useful.
->
-> [`ROADMAP.md`](ROADMAP.md) lists what is missing, what is next, and what is known
-> to be rough.
 
 ---
 
@@ -297,8 +294,7 @@ reaches the video. [`video/`](video) is sizzle's own promo, built with sizzle.
 
 ## Contributing
 
-[`ROADMAP.md`](ROADMAP.md) is the to-do list, ordered by what blocks someone else
-using this. Early enough that the most useful contribution is telling me what broke. If you point it
+Early enough that the most useful contribution is telling me what broke. If you point it
 at your app and it falls over, an issue with your `sizzle.toml` and the error is worth
 more than a patch right now.
 
