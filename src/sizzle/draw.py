@@ -8,10 +8,11 @@ from __future__ import annotations
 
 import math
 import random
+import sys
 
 from PySide6.QtCore import QPointF, QRectF, Qt
-from PySide6.QtGui import (QColor, QFont, QFontMetricsF, QGuiApplication, QImage, QLinearGradient, QPainter,
-                           QPainterPath, QPen, QRadialGradient)
+from PySide6.QtGui import (QColor, QFont, QFontDatabase, QFontInfo, QFontMetricsF, QGuiApplication,
+                           QImage, QLinearGradient, QPainter, QPainterPath, QPen, QRadialGradient)
 
 from . import glyphs
 from .config import Config
@@ -27,6 +28,25 @@ def ensure_app() -> QGuiApplication:
         os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
         _app = QGuiApplication([])
     return QGuiApplication.instance()
+
+
+_checked_fonts: set[str] = set()
+
+
+def check_font(name: str) -> None:
+    """Qt substitutes a missing family silently, so the video renders and merely looks
+    wrong. That is worth a word — once per family, on stderr, never fatal."""
+    if name in _checked_fonts:
+        return
+    _checked_fonts.add(name)
+    ensure_app()
+    if QFontDatabase.hasFamily(name):
+        return
+    substitute = QFontInfo(QFont(name)).family()
+    print(f"! font {name!r} is not installed — Qt is substituting {substitute!r}, so the "
+          f"video will not look as designed.\n"
+          f"  Install it (Debian: apt install fonts-noto) or set [brand] font to one you have.",
+          file=sys.stderr)
 
 # --- easing ------------------------------------------------------------------------------
 
@@ -85,6 +105,7 @@ class Canvas:
         self.config = config
         self.theme = config.theme
         self.brand = config.brand
+        check_font(self.brand.font)
         self.W, self.H = config.width, config.height
         self.cx = self.W / 2
         self.k = min(self.W, self.H) / 1080      # type and icon scale, by the short edge

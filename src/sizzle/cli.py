@@ -55,6 +55,22 @@ def app_python(config) -> str:
     return _python("SIZZLE_APP_PYTHON", hints, "PySide6")
 
 
+# ffmpeg is a system package; pip cannot supply it. Say so once, up front, rather than
+# letting subprocess raise FileNotFoundError six frames deep after a long render.
+NEEDS_FFMPEG = {"build", "video", "mux"}
+
+INSTALL_FFMPEG = {"linux": "apt install ffmpeg  (or dnf/pacman)",
+                  "darwin": "brew install ffmpeg",
+                  "win32": "winget install ffmpeg"}
+
+
+def require_ffmpeg() -> None:
+    if shutil.which("ffmpeg"):
+        return
+    hint = INSTALL_FFMPEG.get(sys.platform, "see https://ffmpeg.org/download.html")
+    raise SystemExit(f"ffmpeg is not on your PATH — sizzle encodes and muxes with it.\n  {hint}")
+
+
 def _run(cmd: list[str], **kw) -> None:
     print("·", " ".join(str(c) for c in cmd), flush=True)
     if subprocess.run([str(c) for c in cmd], **kw).returncode != 0:
@@ -197,6 +213,8 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
 
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+    if args.step in NEEDS_FFMPEG:
+        require_ffmpeg()
     from .config import load
     config = load(args.dir)
     if args.targets:
