@@ -21,8 +21,22 @@ of screenshots you already have), `web` (a browser driven from config) or `video
 out of a screen recording). Prefer a backend that needs no Python when one fits.
 
 ```bash
-sizzle build video/          # or: uvx sizzle build video/
+sizzle build video/
 ```
+
+**Before anything else, check the engine is installed** — `sizzle --help`. If it is not,
+sizzle is not on PyPI yet, so install it from source once, anywhere outside the target
+project:
+
+```bash
+git clone https://github.com/1elmomento/sizzle ~/.local/share/sizzle/src
+python3 -m venv ~/.local/share/sizzle/src/.venv
+~/.local/share/sizzle/src/.venv/bin/pip install -e "$HOME/.local/share/sizzle/src[voice]"
+```
+
+Then use `~/.local/share/sizzle/src/.venv/bin/sizzle` wherever this file says `sizzle`,
+or put it on the PATH. `ffmpeg` must also be installed. Drop the `[voice]` extra if the
+user is bringing their own WAVs in `vo/<key>.wav`.
 
 The capture step runs under the *project's* interpreter (sizzle finds `.venv/bin/python`,
 or set `SIZZLE_APP_PYTHON`), so sizzle never has to share an environment with the app.

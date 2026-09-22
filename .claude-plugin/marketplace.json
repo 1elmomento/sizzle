@@ -1,0 +1,15 @@
+{
+  "name": "sizzle",
+  "owner": {
+    "name": "Behnam Rezaei",
+    "url": "https://github.com/1elmomento"
+  },
+  "plugins": [
+    {
+      "name": "sizzle",
+      "source": "./",
+      "description": "Build narrated product demo videos from your app's real UI, for Instagram Reels, TikTok, YouTube Shorts, X and YouTube."
+    }
+  ],
+  "description": "sizzle: narrated product demo videos built from an app's own UI."
+}

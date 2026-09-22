@@ -75,6 +75,27 @@ purpose: espeak-ng, which Kokoro uses to turn text into phonemes, is GPL-3.0, so
 inherits it by installing sizzle. Prefer a human voice? Drop WAV files named after your
 scene keys into `<project>/vo/` and the rest of the pipeline is unchanged.
 
+## Use it from Claude Code
+
+sizzle ships a [Claude Code](https://claude.com/claude-code) skill, so an agent can write
+the script, the config and the capture script for you and drive the render. Install it as
+a plugin:
+
+```
+/plugin marketplace add 1elmomento/sizzle
+/plugin install sizzle@sizzle
+```
+
+Or, without the plugin system, copy the skill folder into your own skills directory:
+
+```bash
+git clone https://github.com/1elmomento/sizzle
+cp -r sizzle/skills/sizzle ~/.claude/skills/sizzle     # or <project>/.claude/skills/
+```
+
+Either way the skill still needs the `sizzle` command from **Install**, above, plus
+`ffmpeg`. Then just ask: *"make me a promo reel for this app."*
+
 ## Quickstart
 
 The shortest path needs **no Python at all** — just screenshots you already have.
